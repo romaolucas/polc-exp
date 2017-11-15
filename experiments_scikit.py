@@ -47,7 +47,7 @@ def classifier_for(option, score):
                 {'kernel': ['poly'], 'degree': [3, 4, 5], 'coef0': [1, 5, 10], \
                     'C': [10**x for x in range(-2, 3)]}]
     elif option == "logreg":
-        classifier = linear_model.LogisticRegression()
+        classifier = linear_model.LogisticRegression(solver='newton-cg')
         param_grid = [{'multi_class': ['ovr'], 'C': [10**x for x in range(-4, 1)]}, \
                 {'multi_class': ['multinomial'], 'C': [10**x for x in range(-4, 1)]}]
     else:
