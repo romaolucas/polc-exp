@@ -43,10 +43,9 @@ def classifier_for(option, score):
     if option == "svm":
         classifier = svm.SVC()
         param_grid = [{'kernel': ['linear'], 'C': [10**x for x in range(-4, 3)]}, \
-                {'kernel': ['rbf'], 'gamma': [1e-3, 1e-4, 'auto'], 'C': [10**x for x in range(-4, 3)]}, \
-                {'kernel': ['poly'], 'degree': [3, 4, 5], 'coef0': [1e-3, 1e-4, 1, 10], \
-                    'C': [10**x for x in range(-4, 3)]}, \
-                {'kernel': ['sigmoid'], 'coef0': [-10, -1, -1e-3, -1e-4], 'C': [10**x for x in range(-4, 3)]}]
+                {'kernel': ['rbf'], 'gamma': [1e-3, 1e-4, 'auto'], 'C': [10**x for x in range(0, 3)]}, \
+                {'kernel': ['poly'], 'degree': [3, 4, 5], 'coef0': [1, 5, 10], \
+                    'C': [10**x for x in range(-2, 3)]}]
     elif option == "logreg":
         classifier = linear_model.LogisticRegression()
         param_grid = [{'multi_class': ['ovr'], 'C': [10**x for x in range(-4, 1)]}, \
