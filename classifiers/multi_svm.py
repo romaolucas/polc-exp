@@ -1,8 +1,8 @@
 import numpy as np
 import sklearn.datasets as datasets
 import sklearn.model_selection as model_selection
-from .svm import SVMLearn
-from .kernelFactory import KernelFactory
+from svm import SVMLearn
+from kernelFactory import KernelFactory
 
 class MultiSVMLearn(object):
     '''
@@ -26,14 +26,14 @@ class MultiSVMLearn(object):
     K: number of classes
     '''
 
-    def __init__(self, classes, kernelType="", C=1, *args, **kwargs):
+    def __init__(self, classes, kernelType="", C=1, gamma=0.00001, degree=3, coef=0):
         '''
         Creates an instance of MultiSVMLearn
         '''
         self._classifiers = {}
         self._classes = classes
         for c in classes:
-            self._classifiers[c] = SVMLearn(kernelType, C, *args, **kwargs)
+            self._classifiers[c] = SVMLearn(kernelType=kernelType, C=C, gamma=gamma, degree=degree, coef=coef)
 
 
     def fit(self, X, t):
@@ -45,7 +45,6 @@ class MultiSVMLearn(object):
         for c in self._classes:
             self._t[c] = np.array([1 if label == c else -1 for label in t])
         for k in self._classifiers:
-            print("Fitting classifier for class {}".format(k))
             self._classifiers[k].fit(X, self._t[k])
     
     def train(self, X):
@@ -69,7 +68,7 @@ class MultiSVMLearn(object):
 def main():
     X, t = datasets.load_iris(return_X_y=True)
     X_train, X_test, t_train, t_test = model_selection.train_test_split(X, t)
-    svm = MultiSVMLearn(set(t), "pol", 1, 4)
+    svm = MultiSVMLearn(set(t), kernelType="pol", C=1, degree=4)
     svm.fit(X_train, t_train)
     print("finished training")
     print("Accuracy: {}".format(svm.compute_accuracy(X_test, t_test)))

@@ -1,13 +1,13 @@
 import numpy as np
 import math
 
-class BaseKernel():
+class BaseKernel(object):
     '''
     The BaseKernel implementation will be the identify kernel, that is,
     K(x, y) = x'y
     '''
     
-    def __init__(self, *args, **kwargs):
+    def __init__(self, gamma, degree, coef):
         pass
 
     def apply(self, x, y):
@@ -20,13 +20,10 @@ class PolynomialKernel(BaseKernel):
     K(x, y) = (x'y + c)^d
     '''
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.d = args[0]
-        if len(args) > 1:
-            self.c = args[1]
-        else:
-            self.c = 0
+    def __init__(self, gamma, degree, coef):
+        super().__init__(gamma, degree, coef)
+        self.d = degree
+        self.c = coef
 
     def apply(self, x, y):
         return math.pow((np.dot(x, y) + self.c), self.d)
@@ -38,9 +35,9 @@ class RBFKernel(BaseKernel):
     with d being the euclidean distance from x to y
     '''
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.gamma = args[0]
+    def __init__(self, gamma, degree, coef):
+        super().__init__(gamma, degree, coef)
+        self.gamma = gamma
 
     def apply(self, x, y):
         distance = np.linalg.norm(x - y)
@@ -53,9 +50,9 @@ class LaplacianKernel(BaseKernel):
     with d being the euclidean distance from x to y
     '''
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.alpha = args[0]
+    def __init__(self, gamma, degree, coef):
+        super().__init__(gamma, degree, coef)
+        self.alpha = gamma
 
     def apply(self, x, y):
         distance = np.linalg.norm(x - y)
@@ -65,16 +62,13 @@ class HyperbolicTangentKernel(BaseKernel):
     '''
     The HyperbolicTangent Kernel takes two parameters:
     alpha and c. If no value for c is given, c equals 0.
-    K(x, y) = tanh(alpha*x'y + c)
+    K(x, y) = tanh(gamma*x'y + c)
     '''
     
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.alpha = args[0]
-        if len(args) > 1:
-            self.c = args[1]
-        else:
-            self.c = 0
+    def __init__(self, gamma, degree, coef):
+        super().__init__(gamma, degree, coef)
+        self.gamma = gamma
+        self.c = coef
 
     def apply(self, x, y):
-        return np.tanh(self.alpha*np.dot(x, y) + self.c)
+        return np.tanh(self.gamma*np.dot(x, y) + self.c)

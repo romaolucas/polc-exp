@@ -2,7 +2,7 @@ import numpy as np
 import sklearn.datasets as datasets
 import sklearn.model_selection as model_selection
 from cvxopt import solvers, matrix
-from .kernelFactory import KernelFactory
+from kernelFactory import KernelFactory
 
 class SVMLearn(object):
     ''' Implementation of SVM for binary cases
@@ -27,11 +27,11 @@ class SVMLearn(object):
 
     '''
 
-    def __init__(self, kernelType="", C=1, *args, **kwargs):
+    def __init__(self, kernelType="", C=1, gamma=0.00001, degree=3, coef=0):
         '''
         Creates an instance of the SVMLearn
         '''
-        self._kernel = KernelFactory.create_kernel(kernelType, *args, **kwargs)
+        self._kernel = KernelFactory.create_kernel(kernelType, gamma, degree, coef)
         solvers.options["show_progress"] = False
         self._C = C
         self._b = 0
@@ -142,7 +142,7 @@ class SVMLearn(object):
                 y_x += self._multipliers[m]*self._t[m]*self._kernel.apply(x, self._X[m])
             y.append(1 if y_x >= 0 else -1)
         return y
-
+    
     def compute_accuracy(self, X, t):
         y = self.train(X)
         correctly_classified = 0

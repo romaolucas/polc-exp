@@ -1,4 +1,4 @@
-from .kernels import *
+from kernels import *
 
 class KernelFactory():
     '''
@@ -11,13 +11,13 @@ class KernelFactory():
     '''
 
     @staticmethod
-    def create_kernel(kernel_name, *args, **kwargs):
+    def create_kernel(kernel_name, gamma, degree, coef):
         if kernel_name == 'pol':
-            return PolynomialKernel(*args, **kwargs)
+            return PolynomialKernel(gamma, degree, coef)
         if kernel_name == 'rbf':
-            return RBFKernel(*args, **kwargs)
+            return RBFKernel(gamma, degree, coef)
         if kernel_name == 'laplace':
-            return LaplacianKernel(*args, **kwargs)
+            return LaplacianKernel(gamma, degree, coef)
         if kernel_name == 'tanh':
-            return HyperbolicTangentKernel(*args, **kwargs)
-        return BaseKernel(*args, **kwargs)
+            return HyperbolicTangentKernel(gamma, degree, coef)
+        return BaseKernel(gamma, degree, coef)
