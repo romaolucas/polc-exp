@@ -1,8 +1,8 @@
 import numpy as np
 import sklearn.datasets as datasets
 import sklearn.model_selection as model_selection
-from svm import SVMLearn
-from kernelFactory import KernelFactory
+from .svm import SVMLearn
+from .kernelFactory import KernelFactory
 
 class MultiSVMLearn(object):
     '''

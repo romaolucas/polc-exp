@@ -2,7 +2,7 @@ import numpy as np
 import sklearn.datasets as datasets
 import sklearn.model_selection as model_selection
 from cvxopt import solvers, matrix
-from kernelFactory import KernelFactory
+from .kernelFactory import KernelFactory
 
 class SVMLearn(object):
     ''' Implementation of SVM for binary cases
@@ -32,9 +32,7 @@ class SVMLearn(object):
         Creates an instance of the SVMLearn
         '''
         self._kernel = KernelFactory.create_kernel(kernelType, *args, **kwargs)
-        print("kernel: {}".format(self._kernel))
-        print("C: {}".format(C))
-        print("args: {}".format(args))
+        solvers.options["show_progress"] = False
         self._C = C
         self._b = 0
     
@@ -55,7 +53,11 @@ class SVMLearn(object):
         Computes the gram matrix. The matrix is 
         such that K(x, y) = kernel(x, y)
         '''
-        return np.array([[self._kernel.apply(x, y) for x in self._X] for y in self._X])
+        K = np.zeros((self._X.shape[0], self._X.shape[0]))
+        for i, x_i in enumerate(self._X):
+            for j, x_j in enumerate(self._X):
+                K[i, j] = self._kernel.apply(x_i, x_j)
+        return K
 
     def support_vectors(self):
         '''

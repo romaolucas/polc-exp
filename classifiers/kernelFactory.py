@@ -1,4 +1,4 @@
-from kernels import *
+from .kernels import *
 
 class KernelFactory():
     '''
