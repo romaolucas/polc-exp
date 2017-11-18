@@ -1,4 +1,4 @@
-from kernels import *
+from classifiers.kernels import *
 
 class KernelFactory():
     '''

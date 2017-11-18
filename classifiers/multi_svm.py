@@ -1,10 +1,11 @@
 import numpy as np
 import sklearn.datasets as datasets
 import sklearn.model_selection as model_selection
-from svm import SVMLearn
-from kernelFactory import KernelFactory
+from sklearn.base import BaseEstimator
+from classifiers.svm import SVMLearn
+from classifiers.kernelFactory import KernelFactory
 
-class MultiSVMLearn(object):
+class MultiSVMLearn(BaseEstimator):
     '''
     Implementation of SVM for multiple classes
 
@@ -30,11 +31,12 @@ class MultiSVMLearn(object):
         '''
         Creates an instance of MultiSVMLearn
         '''
-        self._classifiers = {}
-        self._classes = classes
-        for c in classes:
-            self._classifiers[c] = SVMLearn(kernelType=kernelType, C=C, gamma=gamma, degree=degree, coef=coef)
-
+        self.classes = classes
+        self.kernelType = kernelType
+        self.C = C
+        self.gamma = gamma
+        self.degree = degree
+        self.coef = coef
 
     def fit(self, X, t):
         '''
@@ -42,12 +44,16 @@ class MultiSVMLearn(object):
         '''
         self._X = np.array(X)
         self._t = {}
-        for c in self._classes:
+        self._classifiers = {}
+        for c in self.classes:
             self._t[c] = np.array([1 if label == c else -1 for label in t])
+        for c in self.classes:
+            self._classifiers[c] = SVMLearn(kernelType=self.kernelType, C=self.C, gamma=self.gamma, \
+                    degree=self.degree, coef=self.coef)
         for k in self._classifiers:
             self._classifiers[k].fit(X, self._t[k])
     
-    def train(self, X):
+    def predict(self, X):
         y = []
         for x in X:
             y_x = {}
@@ -56,14 +62,13 @@ class MultiSVMLearn(object):
             y.append(max(y_x, key=lambda k: y_x[k]))
         return y
 
-    def compute_accuracy(self, X, t):
-        y = self.train(X)
+    def score(self, X, t):
+        y = self.predict(X)
         correctly_classified = 0
         for y_i, t_i in zip(y, t):
             if y_i == t_i:
                 correctly_classified += 1
         return correctly_classified / len(t)
-
 
 def main():
     X, t = datasets.load_iris(return_X_y=True)
@@ -71,7 +76,7 @@ def main():
     svm = MultiSVMLearn(set(t), kernelType="pol", C=1, degree=4)
     svm.fit(X_train, t_train)
     print("finished training")
-    print("Accuracy: {}".format(svm.compute_accuracy(X_test, t_test)))
+    print("Accuracy: {}".format(svm.score(X_test, t_test)))
 
 
 if __name__ == '__main__':
