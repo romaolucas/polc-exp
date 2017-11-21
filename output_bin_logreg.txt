@@ -1,0 +1,104 @@
+tamanhos: X: 2586 e t: 2586
+removidos: 115
+tamanhos: X: 2471 e t: 2471
+Vectorizing data
+
+Fitting data
+Shapes: X_train (1853, 4954) t_train (1853,)
+Best parameters set found on development set:
+
+{'C': 1.0}
+
+Grid scores on development set:
+
+0.556 (+/-0.009) for {'C': 1.0000000000000001e-05}
+0.555 (+/-0.007) for {'C': 0.0001}
+0.567 (+/-0.008) for {'C': 0.001}
+0.621 (+/-0.034) for {'C': 0.01}
+0.693 (+/-0.017) for {'C': 0.10000000000000001}
+0.696 (+/-0.026) for {'C': 1.0}
+0.673 (+/-0.020) for {'C': 10.0}
+0.674 (+/-0.019) for {'C': 100.0}
+0.676 (+/-0.011) for {'C': 1000.0}
+0.662 (+/-0.026) for {'C': 10000.0}
+Cleaning and vectorizing training data:
+Classification report:
+
+             precision    recall  f1-score   support
+
+         -1       0.65      0.68      0.66       300
+          0       0.68      0.65      0.67       318
+
+avg / total       0.66      0.66      0.66       618
+
+bin
+
+tamanhos: X: 2586 e t: 2586
+removidos: 115
+tamanhos: X: 2471 e t: 2471
+Vectorizing data
+
+Fitting data
+Shapes: X_train (1853, 4973) t_train (1853,)
+Best parameters set found on development set:
+
+{'C': 1.0}
+
+Grid scores on development set:
+
+0.556 (+/-0.003) for {'C': 1.0000000000000001e-05}
+0.559 (+/-0.004) for {'C': 0.0001}
+0.573 (+/-0.034) for {'C': 0.001}
+0.620 (+/-0.030) for {'C': 0.01}
+0.686 (+/-0.019) for {'C': 0.10000000000000001}
+0.697 (+/-0.009) for {'C': 1.0}
+0.689 (+/-0.021) for {'C': 10.0}
+0.671 (+/-0.022) for {'C': 100.0}
+0.659 (+/-0.018) for {'C': 1000.0}
+0.656 (+/-0.021) for {'C': 10000.0}
+Cleaning and vectorizing training data:
+Classification report:
+
+             precision    recall  f1-score   support
+
+         -1       0.68      0.70      0.69       300
+          0       0.71      0.69      0.70       318
+
+avg / total       0.70      0.70      0.70       618
+
+bin
+
+tamanhos: X: 2586 e t: 2586
+removidos: 115
+tamanhos: X: 2471 e t: 2471
+Vectorizing data
+
+Fitting data
+Shapes: X_train (1853, 5000) t_train (1853,)
+Best parameters set found on development set:
+
+{'C': 1.0}
+
+Grid scores on development set:
+
+0.505 (+/-0.001) for {'C': 1.0000000000000001e-05}
+0.505 (+/-0.001) for {'C': 0.0001}
+0.511 (+/-0.006) for {'C': 0.001}
+0.610 (+/-0.015) for {'C': 0.01}
+0.686 (+/-0.024) for {'C': 0.10000000000000001}
+0.688 (+/-0.038) for {'C': 1.0}
+0.671 (+/-0.023) for {'C': 10.0}
+0.659 (+/-0.020) for {'C': 100.0}
+0.659 (+/-0.021) for {'C': 1000.0}
+0.652 (+/-0.034) for {'C': 10000.0}
+Cleaning and vectorizing training data:
+Classification report:
+
+             precision    recall  f1-score   support
+
+         -1       0.71      0.77      0.74       313
+          0       0.74      0.68      0.71       305
+
+avg / total       0.73      0.72      0.72       618
+
+
