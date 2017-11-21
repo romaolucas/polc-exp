@@ -33,9 +33,6 @@ class SVMLearn(object):
         '''
         self._kernel = KernelFactory.create_kernel(kernelType, gamma, degree, coef)
         solvers.options["show_progress"] = False
-        solvers.options["abstol"] = 1e-3
-        solvers.options["reltol"] = 1e-3
-        solvers.options["feastol"] = 1e-3
         self._C = C
         self._b = 0
     
