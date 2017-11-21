@@ -1,10 +1,11 @@
 import numpy as np
 import sklearn.datasets as datasets
 import sklearn.model_selection as model_selection
+from sklearn.base import BaseEstimator
 from cvxopt import solvers, matrix
 from classifiers.kernelFactory import KernelFactory
 
-class SVMLearn(object):
+class SVMLearn(BaseEstimator):
     ''' Implementation of SVM for binary cases
 
     This is the implementation described in Bishop's Machine Learning book.
@@ -31,10 +32,12 @@ class SVMLearn(object):
         '''
         Creates an instance of the SVMLearn
         '''
-        self._kernel = KernelFactory.create_kernel(kernelType, gamma, degree, coef)
+        self.kernelType = kernelType
+        self.gamma = gamma
+        self.degree = degree
+        self.coef = coef
         solvers.options["show_progress"] = False
-        self._C = C
-        self._b = 0
+        self.C = C
     
     def compute_y(self, x):
         '''
@@ -77,7 +80,7 @@ class SVMLearn(object):
         '''
         M = []
         for index, multiplier in enumerate(self._multipliers):
-            if multiplier > 0 and multiplier < self._C:
+            if multiplier > 0 and multiplier < self.C:
                 M.append(index)
         return M
 
@@ -109,6 +112,8 @@ class SVMLearn(object):
         '''
         self._X = np.array(X)
         self._t = t
+        self._kernel = KernelFactory.create_kernel(self.kernelType, self.gamma, self.degree, self.coef)
+        self._b = 0
         N = X.shape[0]
         self._multipliers = np.zeros(N)
         K = self.gram_matrix()
@@ -117,7 +122,7 @@ class SVMLearn(object):
         q = matrix(np.ones(N))
         G_C = matrix(np.eye(N))
         G_zero = matrix(np.diag((-1)*np.ones(N)))
-        h_C = matrix(np.ones(N) * self._C)
+        h_C = matrix(np.ones(N) * self.C)
         h_zero = matrix(np.zeros(N))
         G = matrix(np.vstack((G_C, G_zero)))
         h = matrix(np.vstack((h_C, h_zero)))
@@ -127,7 +132,7 @@ class SVMLearn(object):
         self._multipliers = np.ravel(solution['x'])
         self._b = self.calculate_b()
 
-    def train(self, X):
+    def predict(self, X):
         '''
         classify a set of inputs in X using the formula
         y(x) = b + \sum_{i \in S} t[i]*multipliers[i]*k(x, x[i])
@@ -143,8 +148,8 @@ class SVMLearn(object):
             y.append(1 if y_x >= 0 else -1)
         return y
     
-    def compute_accuracy(self, X, t):
-        y = self.train(X)
+    def score(self, X, t):
+        y = self.predict(X)
         correctly_classified = 0
         for y_i, t_i in zip(y, t):
             if y_i == t_i:
@@ -170,7 +175,7 @@ def main():
     svm = SVMLearn()
     svm.fit(X_train, t_train)
     print("finished training")
-    print("Accuracy: ", svm.compute_accuracy(X_test, t_test))
+    print("Accuracy: ", svm.score(X_test, t_test))
 
 if __name__ == '__main__':
     main()
