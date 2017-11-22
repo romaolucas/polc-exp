@@ -61,7 +61,7 @@ def classifier_for(option):
     elif option == "logreg":
         lamb = np.logspace(-5, 4, 15)
         classifier = logistic_regression.LogRegClassifier()
-        param_grid = [{'lamb': C}]
+        param_grid = [{'lamb': lamb}]
     else:
         raise Exception("Opção inválida!")
         show_usage()
