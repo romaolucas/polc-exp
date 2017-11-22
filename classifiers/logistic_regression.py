@@ -8,7 +8,7 @@ from sklearn.base import BaseEstimator
 
 class LogRegClassifier(BaseEstimator):
 
-    def __init__(self, lamb=1e-4, thres=10**-4):
+    def __init__(self, lamb=1e-4, thres=1e-4):
         self.lamb = lamb
         self.thres = thres
 
