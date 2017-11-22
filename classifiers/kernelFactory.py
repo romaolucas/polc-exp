@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from classifiers.kernels import *
 
 class KernelFactory():

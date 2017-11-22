@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import numpy as np
 import sklearn.datasets as datasets
 import sklearn.model_selection as model_selection
