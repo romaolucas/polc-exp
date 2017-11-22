@@ -2,7 +2,7 @@ import sys
 import numpy as np
 import sklearn.model_selection as model_selection
 from sklearn.metrics import classification_report
-from sklearn import svm, linear_model
+from classifiers import logistic_regression, svm
 from extractor import bow
 
 def show_usage():
@@ -52,7 +52,7 @@ def remove_positives(corpus, labels):
 
 def classifier_for(option):
     if option == "svm":
-        classifier = svm.SVC()
+        classifier = svm.SVMLearn()
         gamma = np.logspace(-4, 4, 6)
         param_grid = [{'kernelType': [''], 'C': [10**x for x in range(-4, 3)]}, \
                 {'kernelType': ['rbf'], 'gamma': gamma, 'C': [10**x for x in range(-4, 3)]}, \
@@ -60,8 +60,8 @@ def classifier_for(option):
                     'C': [10**x for x in range(-4, 3)]}]
     elif option == "logreg":
         lamb = np.logspace(-5, 4, 15)
-        classifier = linear_model.LogisticRegression()
-        param_grid = [{'lamb': C}]
+        classifier = logistic_regression.LogRegClassifier()
+        param_grid = [{'lamb': [1e-5, 10]}]
     else:
         raise Exception("Opção inválida!")
         show_usage()
