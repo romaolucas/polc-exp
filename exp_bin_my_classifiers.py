@@ -61,12 +61,12 @@ def classifier_for(option):
     elif option == "logreg":
         lamb = np.logspace(-5, 4, 15)
         classifier = logistic_regression.LogRegClassifier()
-        param_grid = [{'lamb': [1e-5, 10]}]
+        param_grid = [{'lamb': C}]
     else:
         raise Exception("Opção inválida!")
         show_usage()
         sys.exit(-1)
-    return model_selection.GridSearchCV(classifier, param_grid, n_jobs=3)
+    return model_selection.GridSearchCV(classifier, param_grid, n_jobs=4)
 
 def labels_for(classifier, labels):
     labels = np.array(labels, dtype=np.int)
