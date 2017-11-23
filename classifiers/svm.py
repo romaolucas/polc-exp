@@ -70,7 +70,7 @@ class SVMLearn(BaseEstimator):
         '''
         S = []
         for index, multiplier in enumerate(self._multipliers):
-            if multiplier > 0:
+            if multiplier > 1e-5:
                 S.append(index)
         return S
 
@@ -119,14 +119,14 @@ class SVMLearn(BaseEstimator):
         self._multipliers = np.zeros(N)
         K = self.gram_matrix()
         T = np.outer(self._t, self._t)
-        P = matrix(T * K)
+        P = matrix((-1)*(T * K))
         q = matrix(np.ones(N))
         G_C = matrix(np.eye(N))
         G_zero = matrix(np.diag((-1)*np.ones(N)))
         h_C = matrix(np.ones(N) * self.C)
         h_zero = matrix(np.zeros(N))
-        G = matrix(np.vstack((G_C, G_zero)))
-        h = matrix(np.vstack((h_C, h_zero)))
+        G = matrix(np.vstack((G_zero, G_C)))
+        h = matrix(np.vstack((h_zero, h_C)))
         A = matrix(self._t.astype(np.double), (1, N))
         b = matrix(0.0)
         solution = solvers.qp(P, q, G, h, A, b)
