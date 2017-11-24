@@ -1,0 +1,60 @@
+tamanhos: X: 2586 e t: 2586
+removidos: 115
+tamanhos: X: 2471 e t: 2471
+Vectorizing data
+
+Fitting data
+Shapes: X_train (1853, 4778) t_train (1853,)
+Convergiu apos 2 iteracoes
+Convergiu apos 2 iteracoes
+Convergiu apos 6 iteracoes
+Best parameters set found on development set:
+
+{'lamb': 0.31622776601683794}
+
+Grid scores on development set:
+
+0.637 (+/-0.037) for {'lamb': 1.0000000000000001e-05}
+0.684 (+/-0.061) for {'lamb': 0.31622776601683794}
+0.544 (+/-0.025) for {'lamb': 10000.0}
+Cleaning and vectorizing training data:
+Classification report:
+
+             precision    recall  f1-score   support
+
+          0       0.68      0.69      0.68       301
+          1       0.70      0.69      0.69       317
+
+avg / total       0.69      0.69      0.69       618
+
+
+tamanhos: X: 2586 e t: 2586
+removidos: 115
+tamanhos: X: 2471 e t: 2471
+Vectorizing data
+
+Fitting data
+Shapes: X_train (1853, 4751) t_train (1853,)
+Convergiu apos 2 iteracoes
+Convergiu apos 4 iteracoes
+Convergiu apos 5 iteracoes
+Best parameters set found on development set:
+
+{'lamb': 0.31622776601683794}
+
+Grid scores on development set:
+
+0.662 (+/-0.034) for {'lamb': 1.0000000000000001e-05}
+0.697 (+/-0.029) for {'lamb': 0.31622776601683794}
+0.585 (+/-0.138) for {'lamb': 10000.0}
+Cleaning and vectorizing training data:
+Classification report:
+
+             precision    recall  f1-score   support
+
+          0       0.70      0.68      0.69       323
+          1       0.66      0.67      0.67       295
+
+avg / total       0.68      0.68      0.68       618
+
+
