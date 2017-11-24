@@ -41,10 +41,12 @@ def vectorize_data(corpus, option):
 
 def classifier_for(option, score, classes):
     if option == "svm":
-        #gamma = np.logspace(-3, 3, 10)
+        gamma_range = np.logspace(-9, 3, 10)
+        C_range = np.logspace(-2, 5, 13)
         classifier = multi_svm.MultiSVMLearn(classes)
-        param_grid =[{'kernelType': ['rbf'], 'gamma': [1e-4], 'C': [10**x for x in range(0, 1)]}]
-        #param_grid = [{'kernelType': [''], 'C': [10**x for x in range(-4, 4)]}, \
+        param_grid =[{'kernelType': [''], 'C': C_range}, \
+                {'kernelType': ['rbf'], 'gamma': gamma_range, 'C': C_range}, \
+                {'kernelType': ['pol'], 'degree': [3, 4, 4], 'coef': [1, 10, 100], 'C': C_range}]
     elif option == "logreg":
         classifier = linear_model.LogisticRegression(solver='newton-cg')
         param_grid = [{'multi_class': ['ovr'], 'C': [10**x for x in range(-4, 1)]}, \
@@ -53,7 +55,7 @@ def classifier_for(option, score, classes):
         raise Exception("Opção inválida!")
         show_usage()
         sys.exit(-1)
-    return model_selection.GridSearchCV(classifier, param_grid)
+    return model_selection.GridSearchCV(classifier, param_grid, n_jobs=16)
 
 def main(argv):
     X, t = bow.get_info_from("output_clam.csv")

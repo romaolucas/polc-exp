@@ -53,20 +53,21 @@ def remove_positives(corpus, labels):
 def classifier_for(option):
     if option == "svm":
         classifier = svm.SVMLearn()
-        gamma = np.logspace(-4, 4, 6)
-        param_grid = [{'kernelType': [''], 'C': [10**x for x in range(-4, 3)]}, \
-                {'kernelType': ['rbf'], 'gamma': gamma, 'C': [10**x for x in range(-4, 3)]}, \
-                {'kernelType': ['poly'], 'degree': [3, 4, 5], 'coef': [1, 5, 10], \
-                    'C': [10**x for x in range(-4, 3)]}]
+        gamma = np.logspace(-9, 3, 13)
+        C = np.logspace(-2, 10, 13)
+        param_grid = [{'kernelType': [''], 'C': C}, \
+                {'kernelType': ['rbf'], 'gamma': gamma, 'C': C}, \
+                {'kernelType': ['poly'], 'degree': [3, 4, 5], 'coef': [10**x for x in range(-4, 2)], \
+                            'C': C}]
     elif option == "logreg":
-        lamb = np.logspace(-5, 4, 15)
+        lamb = np.logspace(-5, 4, 3)
         classifier = logistic_regression.LogRegClassifier()
         param_grid = [{'lamb': lamb}]
     else:
         raise Exception("Opção inválida!")
         show_usage()
         sys.exit(-1)
-    return model_selection.GridSearchCV(classifier, param_grid, n_jobs=4)
+    return model_selection.GridSearchCV(classifier, param_grid, n_jobs=16)
 
 def labels_for(classifier, labels):
     labels = np.array(labels, dtype=np.int)
